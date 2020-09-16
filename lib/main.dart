@@ -3,7 +3,6 @@ import 'package:despesas_flutter/components/transaction_form.dart';
 import 'package:despesas_flutter/components/transaction_list.dart';
 import 'package:despesas_flutter/models/transaction.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 main() => runApp(DespesasApp());
 
@@ -48,13 +47,15 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _transactions.add(newTransaction);
     });
+
+    Navigator.of(context).pop();
   }
 
   _openTransactionModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (_) {
-        return TransactionForm(null);
+        return TransactionForm(_addTransaction);
       },
     );
   }
