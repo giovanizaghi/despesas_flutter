@@ -80,22 +80,42 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Despesas pessoais"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _openTransactionModal(context),
-          )
-        ],
+    final appBar = AppBar(
+      title: Text(
+        "Despesas pessoais",
+        style: TextStyle(
+            fontSize: 20 *
+                MediaQuery.of(context)
+                    .textScaleFactor), //permitir que este texto mude de tamanho caso o usuário configure no dispositivo
       ),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => _openTransactionModal(context),
+        )
+      ],
+    );
+
+    final double avaiableHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(_recentTransactions),
-            TransactionList(_transactions, _deleteTransaction),
+            Container(
+              height: avaiableHeight * 0.30,
+              child: Chart(
+                _recentTransactions,
+              ),
+            ),
+            Container(
+              height: avaiableHeight * 0.70,
+              child: TransactionList(_transactions, _deleteTransaction),
+            ),
           ],
         ),
       ),
