@@ -41,55 +41,62 @@ class _TransactionFormState extends State<TransactionForm> {
       });
     }
 
-    return Card(
-      elevation: 5,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            TextField(
-              controller: _titleController,
-              decoration: InputDecoration(labelText: "Título"),
-              onSubmitted: (_) => _submitForm(),
-            ),
-            TextField(
-              controller: _valueController,
-              decoration: InputDecoration(labelText: "Valor (R\$)"),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (_) => _submitForm(),
-            ),
-            Container(
-              height: 70,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(_selectedDate != null
-                        ? "Data selecionada: ${DateFormat("dd/MM/yyyy").format(_selectedDate)}"
-                        : "Nenhuma data Selecionada"),
-                  ),
-                  FlatButton(
-                    textColor: Theme.of(context).primaryColor,
-                    child: Text(
-                      'Selecionar Data',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: 10,
+            right: 10,
+            left: 10,
+            bottom: 10,
+          ),
+          child: Column(
+            children: [
+              TextField(
+                controller: _titleController,
+                decoration: InputDecoration(labelText: "Título"),
+                onSubmitted: (_) => _submitForm(),
+              ),
+              TextField(
+                controller: _valueController,
+                decoration: InputDecoration(labelText: "Valor (R\$)"),
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                onSubmitted: (_) => _submitForm(),
+              ),
+              Container(
+                height: 70,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(_selectedDate != null
+                          ? "Data selecionada: ${DateFormat("dd/MM/yyyy").format(_selectedDate)}"
+                          : "Nenhuma data Selecionada"),
                     ),
-                    onPressed: _showDatePicker,
+                    FlatButton(
+                      textColor: Theme.of(context).primaryColor,
+                      child: Text(
+                        'Selecionar Data',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: _showDatePicker,
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  RaisedButton(
+                    textColor: Theme.of(context).textTheme.button.color,
+                    color: Theme.of(context).primaryColor,
+                    child: Text('Nova Transação'),
+                    onPressed: _submitForm,
                   ),
                 ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                RaisedButton(
-                  textColor: Theme.of(context).textTheme.button.color,
-                  color: Theme.of(context).primaryColor,
-                  child: Text('Nova Transação'),
-                  onPressed: _submitForm,
-                ),
-              ],
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
