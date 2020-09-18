@@ -93,6 +93,10 @@ class _HomePageState extends State<HomePage> {
 
     bool isLandscape = mediaQuery.orientation == Orientation.landscape;
 
+    final iconList = Platform.isIOS ? CupertinoIcons.refresh : Icons.list;
+    final chartList =
+        Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
+
     final actions = [
       if (isLandscape)
         _getIconButton(_showChart ? Icons.list : Icons.show_chart, () {
@@ -130,23 +134,25 @@ class _HomePageState extends State<HomePage> {
         appBar.preferredSize.height -
         mediaQuery.padding.top;
 
-    final bodyPage = SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (_showChart || !isLandscape)
-            Container(
-              height: avaiableHeight * (isLandscape ? 0.7 : 0.3),
-              child: Chart(
-                _recentTransactions,
+    final bodyPage = SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (_showChart || !isLandscape)
+              Container(
+                height: avaiableHeight * (isLandscape ? 0.7 : 0.3),
+                child: Chart(
+                  _recentTransactions,
+                ),
               ),
-            ),
-          if (!_showChart || !isLandscape)
-            Container(
-              height: avaiableHeight * (isLandscape ? 1 : 0.7),
-              child: TransactionList(_transactions, _deleteTransaction),
-            ),
-        ],
+            if (!_showChart || !isLandscape)
+              Container(
+                height: avaiableHeight * (isLandscape ? 1 : 0.7),
+                child: TransactionList(_transactions, _deleteTransaction),
+              ),
+          ],
+        ),
       ),
     );
 
