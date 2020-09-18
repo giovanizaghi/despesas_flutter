@@ -93,10 +93,19 @@ class _HomePageState extends State<HomePage> {
                     .textScaleFactor), //permitir que este texto mude de tamanho caso o usuário configure no dispositivo
       ),
       actions: [
+        if (isLandscape)
+          IconButton(
+            icon: Icon(_showChart ? Icons.list : Icons.show_chart),
+            onPressed: () {
+              setState(() {
+                _showChart = !_showChart;
+              });
+            },
+          ),
         IconButton(
           icon: Icon(Icons.add),
           onPressed: () => _openTransactionModal(context),
-        )
+        ),
       ],
     );
 
@@ -110,21 +119,6 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (isLandscape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Exibir Gráfico"),
-                  Switch(
-                    value: _showChart,
-                    onChanged: (value) {
-                      setState(() {
-                        _showChart = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
             if (_showChart || !isLandscape)
               Container(
                 height: avaiableHeight * (isLandscape ? 0.7 : 0.3),
